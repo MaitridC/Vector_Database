@@ -1,6 +1,6 @@
 SQuAD Vector Database Project
 
-This project demonstrates a simple but powerful application of a vector database for semantic search. 
+This project demonstrates a powerful application of a vector database for semantic search. 
 The system uses a subset of the SQuAD (Stanford Question Answering Dataset) and a pre-trained model to create a vector-based index, allowing for highly relevant search results based on the meaning of the text, not just keywords.
 
 ***************************************************************************************************************************************************************************************************************************************************************************************************
