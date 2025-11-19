@@ -1,62 +1,106 @@
-SQuAD Vector Database Project
+# SQuAD Vector Database for Semantic Search
 
-This project demonstrates a powerful application of a vector database for semantic search. 
-The system uses a subset of the SQuAD (Stanford Question Answering Dataset) and a pre-trained model to create a vector-based index, allowing for highly relevant search results based on the meaning of the text, not just keywords.
+A vector database implementation that enables semantic search over the SQuAD dataset. Instead of keyword matching, it understands what you're actually asking and finds relevant answers based on meaning.
 
-***************************************************************************************************************************************************************************************************************************************************************************************************
+## What it does
 
-Features
+Give it a question like "Who invented the telephone?" and it'll find paragraphs mentioning Alexander Graham Bell - even if your exact words don't appear in the text. That's semantic search.
 
-1. Data Loading: Loads a text-based dataset directly from the Hugging Face Hub using a streaming approach to conserve memory.
+The system:
+- Loads the SQuAD dataset (streaming to save memory)
+- Converts text into vector embeddings using Sentence-Transformers
+- Stores them in ChromaDB for fast similarity search
+- Finds the most relevant documents based on query meaning
 
-2. Data Deduplication: Removes duplicate documents to ensure unique and meaningful search results.
+## How it works
 
-3. Vectorization: Utilizes a Sentence-Transformers model to convert text into numerical vectors (embeddings).
+Traditional search matches keywords. This matches **meaning**.
 
-4. Vector Database: Uses ChromaDB, a lightweight, open-source vector database, to store and index the embeddings.
+Every document and query gets converted into a high-dimensional vector (embedding). The database then finds documents whose vectors are closest to your query vector using cosine similarity. It's like asking "what documents are most similar in meaning to my question?"
 
-5. Semantic Search: Performs a similarity search to find the most relevant documents based on a query's meaning.
+## Setup
 
-***************************************************************************************************************************************************************************************************************************************************************************************************
+**Requirements:**
+- Python 3.8+
+- Google Colab or local Python environment
 
-How It Works
+**Install dependencies:**
+```bash
+pip install datasets sentence-transformers chromadb
+```
 
-The core idea is to move beyond keyword matching. The system transforms all documents and user queries into high-dimensional vectors. It then finds the documents with vectors that are most "similar" to the query vector, using a distance metric like cosine similarity. This means a search for "Who invented the telephone?" can find a paragraph that mentions "Alexander Graham Bell" even if the query text doesn't contain that name.
+The script handles this automatically when you run it.
 
-***************************************************************************************************************************************************************************************************************************************************************************************************
+## Usage
 
-Setup and Installation
+**Quick start:**
+```bash
+python vector_database.py
+```
 
-Prerequisites
-A Google Colab notebook or a Python environment with the required packages.
+The script will:
+1. Load the SQuAD dataset (streamed, not all at once)
+2. Remove duplicate documents
+3. Generate embeddings for each document
+4. Populate ChromaDB with the vectors
+5. Run a sample semantic search query
 
-Installation
-Open this script in your local or a notebook.
+**Test your own queries:**
+```bash
+python vector_database_test.py
+```
 
-The code handles the setup automatically. When you run the first code cell, it will execute the following commands to install the necessary libraries:
+**Example output:**
+See `vector_database_results.py` for sample query results.
 
-`!pip install datasets sentence-transformers chromadb`
+## Project Structure
 
-***************************************************************************************************************************************************************************************************************************************************************************************************
+```
+├── vector_database.py          # Main implementation
+├── vector_database_test.py     # Query testing script
+├── vector_database_results.py  # Example results
+└── README.md
+```
 
-Usage
-To run the project, simply execute all the lines in the script.
+## Key Features
 
-1. Run the entire script: Execute all the cells in the script from top to bottom.
+- **Semantic search** - Finds meaning, not just keywords
+- **Deduplication** - Removes duplicate documents automatically
+- **Memory efficient** - Uses streaming to handle large datasets
+- **Fast retrieval** - ChromaDB handles similarity search efficiently
+- **Pre-trained models** - Uses Sentence-Transformers (no training needed)
 
-2. Observe the Output: The script will provide step-by-step updates on its progress, including data loading, embedding generation, and database population.
+## Tech Stack
 
-3. View Results: After the database is populated, the final cells will perform a semantic search and print the top 5 most relevant documents for the query, demonstrating the core functionality of your vector database.
+- **Datasets** (Hugging Face) - SQuAD dataset loading
+- **Sentence-Transformers** - Text to vector embeddings
+- **ChromaDB** - Lightweight vector database for storage and retrieval
 
-***************************************************************************************************************************************************************************************************************************************************************************************************
+## Why I built this
 
-Files
+Wanted to explore how vector databases enable semantic search at scale. Traditional keyword search breaks down when users phrase questions differently than how information is written - vector embeddings solve this by capturing meaning rather than exact matches.
 
-1. vector_database.py: The main script that contains all the logic for data loading, embedding, and searching.
+Also, it's a building block for RAG (Retrieval-Augmented Generation) systems where you need to find relevant context before generating answers.
 
-2. vector_database_test.py: A test script to query the db
+## Example
 
-3. vector_database_resukts.py: A file showing the results of my example query
+**Query:** "Who invented the telephone?"
 
-4. README.md: A guide on how to utilize this repo
+**Traditional keyword search:** Might miss documents that don't contain "invented" or "telephone"
 
+**Vector search:** Finds documents about Alexander Graham Bell and early telephony even with different wording, because the **meaning** matches.
+
+## Future improvements
+
+- Add more datasets beyond SQuAD
+- Experiment with different embedding models
+- Add filtering by metadata (date, source, etc.)
+- Compare performance across different vector databases
+
+## Questions?
+
+Open an issue or reach out on [LinkedIn](https://www.linkedin.com/in/maitri-dodiya-a054012a4/)
+
+---
+
+Built to explore semantic search and vector databases in practice.
