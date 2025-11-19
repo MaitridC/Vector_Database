@@ -90,13 +90,6 @@ Also, it's a building block for RAG (Retrieval-Augmented Generation) systems whe
 
 **Vector search:** Finds documents about Alexander Graham Bell and early telephony even with different wording, because the **meaning** matches.
 
-## Future improvements
-
-- Add more datasets beyond SQuAD
-- Experiment with different embedding models
-- Add filtering by metadata (date, source, etc.)
-- Compare performance across different vector databases
-
 ## Questions?
 
 Open an issue or reach out on [LinkedIn](https://www.linkedin.com/in/maitri-dodiya-a054012a4/)
